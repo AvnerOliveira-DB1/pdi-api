@@ -45,7 +45,7 @@ func Createuser(c *gin.Context) {
 		})
 		return
 	}
-	if u.Name == "" || u.Email == "" || u.Age == 0 {
+	if u.Name != "" && u.Email != "" && u.Age != 0 {
 		c.JSON(200, gin.H{
 			"Status": "OK",
 		})
@@ -57,9 +57,9 @@ func Createuser(c *gin.Context) {
 		return
 	} else {
 		c.JSON(400, gin.H{
-			"error": "cannot bind JSON: " + err.Error(),
+			"error": "Invalid data",
 		})
 		return
-	}
 
+	}
 }
