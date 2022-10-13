@@ -15,6 +15,7 @@ func FindById(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
 		})
+		return
 	}
 
 	if idInt == 3 {
@@ -24,7 +25,13 @@ func FindById(c *gin.Context) {
 			"email": "test@db1.com.br",
 			"age":   30,
 		})
+		return
 
+	} else {
+		c.JSON(400, gin.H{
+			"error": "ID does not exist ",
+		})
+		return
 	}
 
 }
@@ -38,9 +45,21 @@ func Createuser(c *gin.Context) {
 		})
 		return
 	}
-	println("ID: ", u.Id)
-	println("Name: ", u.Name)
-	println("Email: ", u.Email)
-	println("Age: ", u.Age)
+	if u.Name == "" || u.Email == "" || u.Age == 0 {
+		c.JSON(200, gin.H{
+			"Status": "OK",
+		})
+
+		println("ID: ", u.Id)
+		println("Name: ", u.Name)
+		println("Email: ", u.Email)
+		println("Age: ", u.Age)
+		return
+	} else {
+		c.JSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
 
 }
